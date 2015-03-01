@@ -39,7 +39,7 @@ class FormatJavascriptCommand(sublime_plugin.TextCommand):
     output = self.run_script_on_text(buffer_text)
 
     # If the prettified text length is nil, the current syntax isn't supported.
-    if len(output) < 1:
+    if output == None or len(output) < 1:
       return
 
     # Replace the text only if it's different.
@@ -72,7 +72,7 @@ class FormatJavascriptCommand(sublime_plugin.TextCommand):
       cmd = [node_path, script_path, '--fix']
 
       if self.view.file_name():
-          cdir = dirname(self.view.file_name())
+          cdir = os.path.dirname(self.view.file_name())
       else:
           cdir = "/"
 

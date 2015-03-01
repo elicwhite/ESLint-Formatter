@@ -9,5 +9,5 @@
   },
 
   // Automatically format when a file is saved.
-  "format_on_save": false,
+  "format_on_save": false
 }
