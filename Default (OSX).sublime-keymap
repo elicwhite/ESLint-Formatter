@@ -1,0 +1,4 @@
+[{
+  "keys": ["super+shift+h"],
+  "command": "format_javascript"
+}]
