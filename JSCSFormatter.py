@@ -63,13 +63,13 @@ class FormatJavascriptCommand(sublime_plugin.TextCommand):
   def run_script_on_text(self, data):
     try:
       node_path = PluginUtils.get_node_path()
-      script_path = PluginUtils.get_cmd_path('jscs')
+      jscs_path = PluginUtils.get_jscs_path()
 
-      if script_path == False:
+      if jscs_path == False:
         sublime.error_message('JSCS could not be found on your path')
         return;
 
-      cmd = [node_path, script_path, '--fix']
+      cmd = [node_path, jscs_path, '--fix']
 
       if self.view.file_name():
           cdir = os.path.dirname(self.view.file_name())
@@ -132,30 +132,18 @@ class PluginUtils:
     window.open_file(PLUGIN_FOLDER + "/" + KEYMAP_FILE.replace("$PLATFORM", platform))
 
   @staticmethod
-  def get_cmd_path(cmd):
-    # Can't search the path if a directory is specified.
-    assert not os.path.dirname(cmd)
-    path = os.environ.get("PATH", "").split(os.pathsep)
-    extensions = os.environ.get("PATHEXT", "").split(os.pathsep)
-
-    path += ['/usr/local/bin']
-
-    # For each directory in PATH, check if it contains the specified binary.
-    for directory in path:
-      base = os.path.join(directory, cmd)
-      options = [base] + [(base + ext) for ext in extensions]
-      for filename in options:
-        if os.path.exists(filename):
-          return filename
-
-    return False
-
-  @staticmethod
   def get_node_path():
     platform = sublime.platform()
     node = PluginUtils.get_pref("node_path").get(platform)
     print("Using node.js path on '" + platform + "': " + node)
     return node
+
+  @staticmethod
+  def get_jscs_path():
+    platform = sublime.platform()
+    jscs = PluginUtils.get_pref("jscs_path").get(platform)
+    print("Using jscs path on '" + platform + "': " + jscs)
+    return jscs
 
   @staticmethod
   def get_output(cmd, cdir, data):

@@ -8,6 +8,12 @@
     "osx": "/usr/local/bin/node"
   },
 
+  "jscs_path": {
+    "windows": "C:/Program Files/nodejs/jscs",
+    "linux": "/usr/bin/jscs",
+    "osx": "/usr/local/bin/jscs"
+  },
+
   // Automatically format when a file is saved.
   "format_on_save": false
 }
