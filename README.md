@@ -1,121 +1,43 @@
-[Sublime-JSCS-Formatter](https://github.com/TheSavior/jsfmt) for Sublime Text 2/3
+[Sublime-JSCS-Formatter](https://github.com/TheSavior/Sublime-JSCS-Formatter) for Sublime Text 3
 =================
 
-
-If you want your javascript automatically formatted to abide a particular style,
-then jsfmt is for you.  No need to read warnings and fix things yourself.
-Just keep it all auto. Boom boom [jsfmt](https://github.com/rdio/jsfmt) is pretty tight.
-And yeah, if you want it in Sublime Text this is your homeboy.
-
-![](http://i.imgur.com/zkBvQ6X.gif)
-
-Enable `autoformat` then save the file and it gets formatted.
-
-### Installation
-
-**Via package control**
-Open your command palette -> Package Control: Install Package -> jsfmt
-
-**Manual**
-```bash
-
-## go to your ST packages folder. maybe something like …
-cd ~/Library/"Application Support/Sublime Text 2"/Packages
-
-# clone this repo
-git clone https://github.com/ionutvmi/sublime-jsfmt jsfmt
-```
-
-On windows open cmd and:
-```
-cd %APPDATA%\"Sublime Text 3"\Packages
-git clone https://github.com/ionutvmi/sublime-jsfmt jsfmt
-```
-
-### Plugins included
-- [esformatter-braces](https://github.com/pgilad/esformatter-braces)
-- [esformatter-semicolons](https://github.com/bulyshko/esformatter-semicolons)
-- [esformatter-dot-notation](https://github.com/pgilad/esformatter-dot-notation)
-- [esformatter-quotes](https://github.com/millermedeiros/esformatter-quotes)
+Sublime Text 3 Plugin to autoformat your javascript code according to the JSCS configuration files you already have.
 
 
-### Settings
-```javascript
-{
-    // autoformat on save
-    "autoformat": false,
+## Installation
 
-    // array of extensions for autoformat
-    "extensions": ["js", "sublime-settings"],
+### Linter installation
+JSCS (with autoformatting) must be installed on your system before this plugin will work. To install `jscs`, do the following:
 
-    // options for jsfmt
-    "options": {
-        "preset": "jquery",
-        "indent": {
-            "value": "    "
-        },
-        // plugins included
-        "plugins": [
-            // "esformatter-quotes",
-            // "esformatter-semicolons",
-            // "esformatter-braces",
-            // "esformatter-dot-notation"
-        ]
-    },
-    "options-JSON": {
-        "plugins": [
-            "esformatter-quotes"
-        ],
-        "quotes": {
-            "type": "double"
-        }
-    },
-    "alert-errors": true,
-    // path to nodejs
-    "node-path": "node"
-}
+1. Install [Node.js](http://nodejs.org) (and [npm](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) on Linux).
 
-```
+1. Install `jscs` by typing the following in a terminal:
+   ```
+   npm install -g jscs
+   ```
 
-### Commands
+1. If you are using `nvm` and `zsh`, ensure that the line to load `nvm` is in `.zshenv` and not `.zshrc`.
+
+1. If you are using `zsh` and `oh-my-zsh`, do not load the `nvm` plugin for `oh-my-zsh`.
+
+### Plugin installation
+
+Please use [Package Control](https://sublime.wbond.net/installation) to install the linter plugin. This will ensure that the plugin will be updated when new versions are available. If you want to install from source so you can modify the source code, you probably know what you are doing so we won’t cover that here.
+
+To install via Package Control, do the following:
+
+1. Within Sublime Text, bring up the [Command Palette](http://docs.sublimetext.info/en/sublime-text-3/extensibility/command_palette.html) and type `install`. Among the commands you should see `Package Control: Install Package`. If that command is not highlighted, use the keyboard or mouse to select it. There will be a pause of a few seconds while Package Control fetches the list of available plugins.
+
+1. When the plugin list appears, type `jscs format`. Among the entries you should see `Sublime-JSCS-Formatter`. If that entry is not highlighted, use the keyboard or mouse to select it.
+
+
+## Commands
 **Command palette:**
 
-- JSFMT: Format the current file
-- JSFMT: Toggle autoformat
-- JSFMT: Settings - Default
-- JSFMT: Settings - User
-
-**Menu:**
-Preferences -> Package Settings -> Sublime JSFMT
+- JSCSFormatter: Format this file
 
 
-### Formatting rules
+## Contributing
 
-You can set global rules via a `.jsfmtrc`. Be crazy and establish one for all your
-projects in `~/.jsfmtrc`. (like in [dotfiles](https://github.com/paulirish/dotfiles/blob/master/.jsfmtrc))
-
-Otherwise you're probably pretty levelheaded and will probably provide one in your
-project root. It'll be read and applied.
-
-Rules you can intuit from these [esformatter preset files](https://github.com/millermedeiros/esformatter/tree/master/lib/preset).
-
-There's a `.jsfmtrc-sample` in this repo. It's a good start. Rename it and toss it
-somewhere. Try it out.
-
-### Installing plugins
-If you want to use a plugin that is not installed by default you will need to follow the next steps:
-
-1. Go to the packages folder (Preferences -> Browse Packages)
-2. cd into the jsfmt folder.
-3. Install the plugins you need.
-4. Go to your jsfmt settings file and add the name of the plugin in the plugins array.
-
-#### Compatibility
-
-Should work in both ST2 and ST3.
-
-
-### Contributing
-
-If you find any bugs feel free to report them [here](https://github.com/ionutvmi/sublime-jsfmt/issues)
+If you find any bugs feel free to report them [here](https://github.com/TheSavior/Sublime-JSCS-Formatter/issues)
 Pull requests are also encouraged.
