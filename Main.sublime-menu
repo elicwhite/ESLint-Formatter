@@ -1,0 +1,23 @@
+[{
+  "id": "tools",
+  "children": [{
+    "id": "jscsformatter_tools",
+    "caption": "JSCS Formatter",
+    "children": [{
+      "caption": "Format This File",
+      "command": "format_javascript"
+    }]
+  }]
+}, {
+  "id": "preferences",
+  "children": [{
+    "id": "package-settings",
+    "children": [{
+      "caption": "JSCS Formatter",
+      "children": [{
+        "caption": "Format This File",
+        "command": "format_javascript"
+      }]
+    }]
+  }]
+}]

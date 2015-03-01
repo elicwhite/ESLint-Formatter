@@ -1,4 +1,7 @@
 [{
-  "caption": "JSCSFormatter: Format this file",
-  "command": "format_javascript"
+  "caption": "JSCS Formatter",
+  "children": [{
+    "caption": "Format This File",
+    "command": "format_javascript"
+  }]
 }]
