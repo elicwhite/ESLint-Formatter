@@ -1,4 +1,4 @@
-[Sublime-JSCS-Formatter](https://github.com/TheSavior/Sublime-JSCS-Formatter) for Sublime Text 3
+[SublimeJSCSFormatter](https://github.com/TheSavior/SublimeJSCSFormatter) for Sublime Text 3
 =================
 
 Sublime Text 3 Plugin to autoformat your javascript code according to the JSCS configuration files you already have.
@@ -28,7 +28,7 @@ To install via Package Control, do the following:
 
 1. Within Sublime Text, bring up the [Command Palette](http://docs.sublimetext.info/en/sublime-text-3/extensibility/command_palette.html) and type `install`. Among the commands you should see `Package Control: Install Package`. If that command is not highlighted, use the keyboard or mouse to select it. There will be a pause of a few seconds while Package Control fetches the list of available plugins.
 
-1. When the plugin list appears, type `jscs format`. Among the entries you should see `Sublime-JSCS-Formatter`. If that entry is not highlighted, use the keyboard or mouse to select it.
+1. When the plugin list appears, type `jscs format`. Among the entries you should see `JSCSFormatter`. If that entry is not highlighted, use the keyboard or mouse to select it.
 
 
 ## Commands
@@ -39,5 +39,5 @@ To install via Package Control, do the following:
 
 ## Contributing
 
-If you find any bugs feel free to report them [here](https://github.com/TheSavior/Sublime-JSCS-Formatter/issues)
+If you find any bugs feel free to report them [here](https://github.com/TheSavior/SublimeJSCSFormatter/issues)
 Pull requests are also encouraged.
