@@ -18,18 +18,11 @@ KEYMAP_FILE = "Default ($PLATFORM).sublime-keymap"
 
 IS_WINDOWS = platform.system() == 'Windows'
 
-<<<<<<< Updated upstream:JSCS-Formatter.py
-# BIN_PATH = join(sublime.packages_path(), dirname(realpath(__file__)), 'jscs-passthrough.js')
-# BIN_PATH = join(sublime.packages_path(), dirname(realpath(__file__)), 'node_modules/.bin/jscs')
-BIN_PATH = 'jscs'
-SETTINGS_FILE = 'JSCS-Formatter.sublime-settings'
-=======
 class FormatJavascriptCommand(sublime_plugin.TextCommand):
   def run(self, edit):
     # Save the current viewport position to scroll to it after formatting.
     previous_selection = list(self.view.sel()) # Copy.
     previous_position = self.view.viewport_position()
->>>>>>> Stashed changes:JSCSFormatter.py
 
     # Save the already folded code to refold it after formatting.
     # Backup of folded code is taken instead of regions because the start and end pos
