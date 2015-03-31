@@ -6,15 +6,6 @@
     "children": [{
       "caption": "Format This File",
       "command": "format_javascript"
-    }, {
-      "caption": "Set Plugin Options",
-      "command": "jscs_formatter_set_plugin_options"
-    }, {
-      "caption": "Set Keyboard Shortcuts",
-      "command": "jscs_formatter_set_keyboard_shortcuts"
-    }, {
-      "caption": "Set `node` Path",
-      "command": "jscs_formatter_set_node_path"
     }]
   }]
 }, {
@@ -24,17 +15,63 @@
     "children": [{
       "caption": "JSCS Formatter",
       "children": [{
-        "caption": "Format This File",
-        "command": "format_javascript"
+        "command": "open_file",
+        "args": {
+          "file": "${packages}/JSCS-Formatter/JSCS-Formatter.sublime-settings"
+        },
+        "caption": "Settings – Default"
       }, {
-        "caption": "Set Plugin Options",
-        "command": "jscs_formatter_set_plugin_options"
+        "command": "open_file",
+        "args": {
+          "file": "${packages}/User/JSCS-Formatter.sublime-settings"
+        },
+        "caption": "Settings – User"
       }, {
-        "caption": "Set Keyboard Shortcuts",
-        "command": "jscs_formatter_set_keyboard_shortcuts"
+        "caption": "-"
       }, {
-        "caption": "Set `node` Path",
-        "command": "jscs_formatter_set_node_path"
+        "command": "open_file",
+        "args": {
+          "file": "${packages}/JSCS-Formatter/Default (OSX).sublime-keymap",
+          "platform": "OSX"
+        },
+        "caption": "Key Bindings – Default"
+      }, {
+        "command": "open_file",
+        "args": {
+          "file": "${packages}/JSCS-Formatter/Default (Linux).sublime-keymap",
+          "platform": "Linux"
+        },
+        "caption": "Key Bindings – Default"
+      }, {
+        "command": "open_file",
+        "args": {
+          "file": "${packages}/JSCS-Formatter/Default (Windows).sublime-keymap",
+          "platform": "Windows"
+        },
+        "caption": "Key Bindings – Default"
+      }, {
+        "command": "open_file",
+        "args": {
+          "file": "${packages}/User/Default (OSX).sublime-keymap",
+          "platform": "OSX"
+        },
+        "caption": "Key Bindings – User"
+      }, {
+        "command": "open_file",
+        "args": {
+          "file": "${packages}/User/Default (Linux).sublime-keymap",
+          "platform": "Linux"
+        },
+        "caption": "Key Bindings – User"
+      }, {
+        "command": "open_file",
+        "args": {
+          "file": "${packages}/User/Default (Windows).sublime-keymap",
+          "platform": "Windows"
+        },
+        "caption": "Key Bindings – User"
+      }, {
+        "caption": "-"
       }]
     }]
   }]

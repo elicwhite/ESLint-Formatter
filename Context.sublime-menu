@@ -3,14 +3,5 @@
   "children": [{
     "caption": "Format This File",
     "command": "format_javascript"
-  }, {
-    "caption": "Set Plugin Options",
-    "command": "jscs_formatter_set_plugin_options"
-  },  {
-    "caption": "Set Keyboard Shortcuts",
-    "command": "jscs_formatter_set_keyboard_shortcuts"
-  }, {
-    "caption": "Set `node` Path",
-    "command": "jscs_formatter_set_node_path"
   }]
 }]

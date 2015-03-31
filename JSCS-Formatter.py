@@ -12,8 +12,7 @@ try:
 except ImportError:
   pass
 
-PLUGIN_FOLDER = os.path.dirname(os.path.realpath(__file__))
-SETTINGS_FILE = "JSCSFormatter.sublime-settings"
+SETTINGS_FILE = "JSCS-Formatter.sublime-settings"
 KEYMAP_FILE = "Default ($PLATFORM).sublime-keymap"
 
 IS_WINDOWS = platform.system() == 'Windows'
@@ -102,34 +101,10 @@ class JscsFormatterEventListeners(sublime_plugin.EventListener):
     if PluginUtils.get_pref("format_on_save"):
       view.run_command("format_javascript")
 
-class JscsFormatterSetPluginOptionsCommand(sublime_plugin.TextCommand):
-  def run(self, edit):
-    PluginUtils.open_sublime_settings(self.view.window())
-
-class JscsFormatterSetKeyboardShortcutsCommand(sublime_plugin.TextCommand):
-  def run(self, edit):
-    PluginUtils.open_sublime_keymap(self.view.window(), {
-      "windows": "Windows",
-      "linux": "Linux",
-      "osx": "OSX"
-    }.get(sublime.platform()))
-
-class JscsFormatterSetNodePathCommand(sublime_plugin.TextCommand):
-  def run(self, edit):
-    PluginUtils.open_sublime_settings(self.view.window())
-
 class PluginUtils:
   @staticmethod
   def get_pref(key):
     return sublime.load_settings(SETTINGS_FILE).get(key)
-
-  @staticmethod
-  def open_sublime_settings(window):
-    window.open_file(PLUGIN_FOLDER + "/" + SETTINGS_FILE)
-
-  @staticmethod
-  def open_sublime_keymap(window, platform):
-    window.open_file(PLUGIN_FOLDER + "/" + KEYMAP_FILE.replace("$PLATFORM", platform))
 
   @staticmethod
   def get_node_path():

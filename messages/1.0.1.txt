@@ -1,0 +1,5 @@
+JSCS-Formatter 1.0.1 changelog
+
+CHANGES/FIXES
+
++ Can now modify the package settings

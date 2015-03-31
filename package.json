@@ -1,6 +1,0 @@
-{
-  "name": "sublime-jscs-formatter",
-  "engines": {
-    "node": ">=0.10.0"
-  }
-}
