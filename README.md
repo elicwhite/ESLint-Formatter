@@ -36,6 +36,32 @@ To install via Package Control, do the following:
 
 - JSCSFormatter: Format this file
 
+## Settings
+
+By default, JSCSFormatter will supply the following settings:
+
+```
+{
+  // The Nodejs installation path
+  "node_path": {
+    "windows": "C:/Program Files/nodejs/node.exe",
+    "linux": "/usr/bin/nodejs",
+    "osx": "/usr/local/bin/node"
+  },
+
+  // The location of the the globally installed jscs package
+  "jscs_path": {
+    "windows": "C:/Program Files/nodejs/jscs",
+    "linux": "/usr/bin/jscs",
+    "osx": "/usr/local/bin/jscs"
+  },
+
+  // Automatically format when a file is saved.
+  "format_on_save": false
+}
+```
+
+* Modify any settings within the `Preferences -> Package Settings -> JSCS Formatter -> Settings - User` file.
 
 ## Contributing
 
