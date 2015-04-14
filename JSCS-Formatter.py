@@ -70,6 +70,11 @@ class FormatJavascriptCommand(sublime_plugin.TextCommand):
 
       cmd = [node_path, jscs_path, '--fix']
 
+      config_path = PluginUtils.get_pref("config_path")
+      if config_path:
+        print("Using configuration from {0}".format(config_path))
+        cmd.extend(["--config", config_path])
+
       if self.view.file_name():
           cdir = os.path.dirname(self.view.file_name())
       else:
