@@ -44,14 +44,14 @@ By default, JSCSFormatter will supply the following settings:
 {
   // The Nodejs installation path
   "node_path": {
-    "windows": "C:/Program Files/nodejs/node.exe",
+    "windows": "node.exe",
     "linux": "/usr/bin/nodejs",
     "osx": "/usr/local/bin/node"
   },
 
   // The location of the the globally installed jscs package
   "jscs_path": {
-    "windows": "C:/Program Files/nodejs/jscs",
+    "windows": "%APPDATA%/npm/node_modules/jscs/bin/jscs",
     "linux": "/usr/bin/jscs",
     "osx": "/usr/local/bin/jscs"
   },
