@@ -36,6 +36,10 @@ To install via Package Control, do the following:
 
 - JSCSFormatter: Format this file
 
+**Shortcut key:**
+
+- Ctrl+Shift+H
+
 ## Settings
 
 By default, JSCSFormatter will supply the following settings:
@@ -55,7 +59,12 @@ By default, JSCSFormatter will supply the following settings:
     "linux": "/usr/bin/jscs",
     "osx": "/usr/local/bin/jscs"
   },
-
+  
+  // Specify this path to a JSCS config file to override the default behavior.
+  // Passed to JSCS as --config. Read more here:
+  // http://jscs.info/overview.html#-config-
+  "config_path": "",
+  
   // Automatically format when a file is saved.
   "format_on_save": false
 }
