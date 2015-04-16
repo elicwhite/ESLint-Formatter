@@ -63,6 +63,25 @@ By default, JSCSFormatter will supply the following settings:
 
 * Modify any settings within the `Preferences -> Package Settings -> JSCS Formatter -> Settings - User` file.
 
+**Project-specific settings override**
+
+To override global plugin configuration for a specific project, put an object with new values into `.sublime-project`:
+
+```
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "JSCS-Formatter": {
+      "format_on_save": true
+    }
+  }
+}
+```
+
 ## Contributing
 
 If you find any bugs feel free to report them [here](https://github.com/TheSavior/SublimeJSCSFormatter/issues)
