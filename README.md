@@ -86,5 +86,6 @@ For example:
 
 ## Contributing
 
-If you find any bugs feel free to report them [here](https://github.com/TheSavior/SublimeJSCSFormatter/issues)
+If you find any bugs feel free to report them [here](https://github.com/TheSavior/SublimeJSCSFormatter/issues).
+
 Pull requests are also encouraged.
