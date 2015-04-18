@@ -12,7 +12,8 @@ try:
 except ImportError:
   pass
 
-SETTINGS_FILE = "JSCS-Formatter.sublime-settings"
+PROJECT_NAME = "JSCS-Formatter"
+SETTINGS_FILE = PROJECT_NAME + ".sublime-settings"
 KEYMAP_FILE = "Default ($PLATFORM).sublime-keymap"
 
 IS_WINDOWS = platform.system() == 'Windows'
@@ -109,7 +110,17 @@ class JscsFormatterEventListeners(sublime_plugin.EventListener):
 class PluginUtils:
   @staticmethod
   def get_pref(key):
-    return sublime.load_settings(SETTINGS_FILE).get(key)
+    global_settings = sublime.load_settings(SETTINGS_FILE)
+    value = global_settings.get(key)
+
+    # Load active project settings
+    project_settings = sublime.active_window().active_view().settings()
+
+    # Overwrite global config value if it's defined
+    if project_settings.has(PROJECT_NAME):
+      value = project_settings.get(PROJECT_NAME).get(key, value)
+
+    return value
 
   @staticmethod
   def get_node_path():
