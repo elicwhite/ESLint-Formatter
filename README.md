@@ -65,7 +65,9 @@ By default, JSCSFormatter will supply the following settings:
 
 **Project-specific settings override**
 
-To override global plugin configuration for a specific project, put an object with new values into `.sublime-project`:
+To override global plugin configuration for a specific project, add a settings object with a `JSCS-Formatter` key in your `.sublime-project`. This file is accessible via `Project -> Edit Project`.
+
+For example:
 
 ```
 {
