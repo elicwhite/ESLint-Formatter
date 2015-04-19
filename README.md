@@ -38,7 +38,8 @@ To install via Package Control, do the following:
 
 **Shortcut key:**
 
-- Ctrl+Shift+H
+* Linux/Windows: [Ctrl + Shift + H]
+* Mac: [Cmd + Shift + H]
 
 ## Settings
 
