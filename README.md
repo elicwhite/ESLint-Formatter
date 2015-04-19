@@ -36,6 +36,11 @@ To install via Package Control, do the following:
 
 - JSCSFormatter: Format this file
 
+**Shortcut key:**
+
+* Linux/Windows: [Ctrl + Shift + H]
+* Mac: [Cmd + Shift + H]
+
 ## Settings
 
 By default, JSCSFormatter will supply the following settings:
@@ -44,18 +49,23 @@ By default, JSCSFormatter will supply the following settings:
 {
   // The Nodejs installation path
   "node_path": {
-    "windows": "C:/Program Files/nodejs/node.exe",
+    "windows": "node.exe",
     "linux": "/usr/bin/nodejs",
     "osx": "/usr/local/bin/node"
   },
 
   // The location of the the globally installed jscs package
   "jscs_path": {
-    "windows": "C:/Program Files/nodejs/jscs",
+    "windows": "%APPDATA%/npm/node_modules/jscs/bin/jscs",
     "linux": "/usr/bin/jscs",
     "osx": "/usr/local/bin/jscs"
   },
-
+  
+  // Specify this path to a JSCS config file to override the default behavior.
+  // Passed to JSCS as --config. Read more here:
+  // http://jscs.info/overview.html#-config-
+  "config_path": "",
+  
   // Automatically format when a file is saved.
   "format_on_save": false
 }
