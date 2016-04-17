@@ -8,15 +8,15 @@
     "osx": "/usr/local/bin/node"
   },
 
-  "jscs_path": {
-    "windows": "%APPDATA%/npm/node_modules/jscs/bin/jscs",
-    "linux": "/usr/bin/jscs",
-    "osx": "/usr/local/bin/jscs"
+  "eslint_path": {
+    "windows": "%APPDATA%/npm/node_modules/eslint/bin/eslint",
+    "linux": "/usr/bin/eslint",
+    "osx": "/usr/local/bin/eslint"
   },
 
-  // Specify this path to a JSCS config file to override the default behavior.
-  // Passed to JSCS as --config. Read more here:
-  // http://jscs.info/overview.html#-config-
+  // Specify this path to an eslint config file to override the default behavior.
+  // Passed to eslint as --config. Read more here:
+  // http://eslint.org/docs/user-guide/command-line-interface#c---config
   "config_path": "",
 
   // Automatically format when a file is saved.

@@ -1,5 +1,0 @@
-JSCS-Formatter 1.2.0 changelog
-
-CHANGES/FIXES
-
-+ Support overriding settings in `.sublime-project` files.

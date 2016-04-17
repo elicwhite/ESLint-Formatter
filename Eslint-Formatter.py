@@ -12,7 +12,7 @@ try:
 except ImportError:
   pass
 
-PROJECT_NAME = "JSCS-Formatter"
+PROJECT_NAME = "Eslint-Formatter"
 SETTINGS_FILE = PROJECT_NAME + ".sublime-settings"
 KEYMAP_FILE = "Default ($PLATFORM).sublime-keymap"
 
@@ -32,11 +32,13 @@ class FormatJavascriptCommand(sublime_plugin.TextCommand):
     # Get the current text in the buffer and save it in a temporary file.
     # This allows for scratch buffers and dirty files to be linted as well.
     entire_buffer_region = sublime.Region(0, self.view.size())
-    text_selection_region = self.view.sel()[0]
 
     buffer_text = self.get_buffer_text(entire_buffer_region)
 
-    output = self.run_script_on_text(buffer_text)
+    output = self.run_script_on_file(self.view.file_name())
+
+    return
+    # eslint currently does not print the fixed file to stdout, it just modifies the file.
 
     # If the prettified text length is nil, the current syntax isn't supported.
     if output == None or len(output) < 1:
@@ -60,16 +62,16 @@ class FormatJavascriptCommand(sublime_plugin.TextCommand):
     buffer_text = self.view.substr(region)
     return buffer_text
 
-  def run_script_on_text(self, data):
+  def run_script_on_file(self, data):
     try:
       node_path = PluginUtils.get_node_path()
-      jscs_path = PluginUtils.get_jscs_path()
+      eslint_path = PluginUtils.get_eslint_path()
 
-      if jscs_path == False:
-        sublime.error_message('JSCS could not be found on your path')
+      if eslint_path == False:
+        sublime.error_message('Eslint could not be found on your path')
         return;
 
-      cmd = [node_path, jscs_path, '--fix']
+      cmd = [node_path, eslint_path, '--fix', data]
 
       config_path = PluginUtils.get_pref("config_path")
       if config_path:
@@ -101,7 +103,7 @@ class FormatJavascriptCommand(sublime_plugin.TextCommand):
         region_end = region_start + len(content)
         self.view.fold(sublime.Region(region_start, region_end))
 
-class JscsFormatterEventListeners(sublime_plugin.EventListener):
+class EslintFormatterEventListeners(sublime_plugin.EventListener):
   @staticmethod
   def on_pre_save(view):
     if PluginUtils.get_pref("format_on_save"):
@@ -130,11 +132,11 @@ class PluginUtils:
     return node
 
   @staticmethod
-  def get_jscs_path():
+  def get_eslint_path():
     platform = sublime.platform()
-    jscs = PluginUtils.get_pref("jscs_path").get(platform)
-    print("Using jscs path on '" + platform + "': " + jscs)
-    return jscs
+    eslint = PluginUtils.get_pref("eslint_path").get(platform)
+    print("Using eslint path on '" + platform + "': " + eslint)
+    return eslint
 
   @staticmethod
   def get_output(cmd, cdir, data):

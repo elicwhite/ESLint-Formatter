@@ -1,6 +1,0 @@
-JSCS-Formatter 1.1.0 changelog
-
-CHANGES/FIXES
-
-+ Can now specify the JSCS configuration file to use
-+ More reasonable defaults for Windows paths to the node and JSCS binaries

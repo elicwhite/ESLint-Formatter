@@ -1,8 +1,8 @@
 [{
   "id": "tools",
   "children": [{
-    "id": "jscsformatter_tools",
-    "caption": "JSCS Formatter",
+    "id": "eslintformatter_tools",
+    "caption": "Eslint Formatter",
     "children": [{
       "caption": "Format This File",
       "command": "format_javascript"
@@ -13,17 +13,17 @@
   "children": [{
     "id": "package-settings",
     "children": [{
-      "caption": "JSCS Formatter",
+      "caption": "Eslint Formatter",
       "children": [{
         "command": "open_file",
         "args": {
-          "file": "${packages}/JSCS-Formatter/JSCS-Formatter.sublime-settings"
+          "file": "${packages}/Eslint-Formatter/Eslint-Formatter.sublime-settings"
         },
         "caption": "Settings – Default"
       }, {
         "command": "open_file",
         "args": {
-          "file": "${packages}/User/JSCS-Formatter.sublime-settings"
+          "file": "${packages}/User/Eslint-Formatter.sublime-settings"
         },
         "caption": "Settings – User"
       }, {
@@ -31,21 +31,21 @@
       }, {
         "command": "open_file",
         "args": {
-          "file": "${packages}/JSCS-Formatter/Default (OSX).sublime-keymap",
+          "file": "${packages}/Eslint-Formatter/Default (OSX).sublime-keymap",
           "platform": "OSX"
         },
         "caption": "Key Bindings – Default"
       }, {
         "command": "open_file",
         "args": {
-          "file": "${packages}/JSCS-Formatter/Default (Linux).sublime-keymap",
+          "file": "${packages}/Eslint-Formatter/Default (Linux).sublime-keymap",
           "platform": "Linux"
         },
         "caption": "Key Bindings – Default"
       }, {
         "command": "open_file",
         "args": {
-          "file": "${packages}/JSCS-Formatter/Default (Windows).sublime-keymap",
+          "file": "${packages}/Eslint-Formatter/Default (Windows).sublime-keymap",
           "platform": "Windows"
         },
         "caption": "Key Bindings – Default"
