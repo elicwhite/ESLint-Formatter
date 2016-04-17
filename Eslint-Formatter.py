@@ -12,7 +12,7 @@ try:
 except ImportError:
   pass
 
-PROJECT_NAME = "Eslint-Formatter"
+PROJECT_NAME = "ESLint-Formatter"
 SETTINGS_FILE = PROJECT_NAME + ".sublime-settings"
 KEYMAP_FILE = "Default ($PLATFORM).sublime-keymap"
 
@@ -68,7 +68,7 @@ class FormatJavascriptCommand(sublime_plugin.TextCommand):
       eslint_path = PluginUtils.get_eslint_path()
 
       if eslint_path == False:
-        sublime.error_message('Eslint could not be found on your path')
+        sublime.error_message('ESLint could not be found on your path')
         return;
 
       cmd = [node_path, eslint_path, '--fix', data]
@@ -103,7 +103,7 @@ class FormatJavascriptCommand(sublime_plugin.TextCommand):
         region_end = region_start + len(content)
         self.view.fold(sublime.Region(region_start, region_end))
 
-class EslintFormatterEventListeners(sublime_plugin.EventListener):
+class ESLintFormatterEventListeners(sublime_plugin.EventListener):
   @staticmethod
   def on_pre_save(view):
     if PluginUtils.get_pref("format_on_save"):

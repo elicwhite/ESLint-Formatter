@@ -2,7 +2,7 @@
   "id": "tools",
   "children": [{
     "id": "eslintformatter_tools",
-    "caption": "Eslint Formatter",
+    "caption": "ESLint Formatter",
     "children": [{
       "caption": "Format This File",
       "command": "format_javascript"
@@ -13,17 +13,17 @@
   "children": [{
     "id": "package-settings",
     "children": [{
-      "caption": "Eslint Formatter",
+      "caption": "ESLint Formatter",
       "children": [{
         "command": "open_file",
         "args": {
-          "file": "${packages}/Eslint-Formatter/Eslint-Formatter.sublime-settings"
+          "file": "${packages}/ESLint-Formatter/ESLint-Formatter.sublime-settings"
         },
         "caption": "Settings – Default"
       }, {
         "command": "open_file",
         "args": {
-          "file": "${packages}/User/Eslint-Formatter.sublime-settings"
+          "file": "${packages}/User/ESLint-Formatter.sublime-settings"
         },
         "caption": "Settings – User"
       }, {
@@ -31,21 +31,21 @@
       }, {
         "command": "open_file",
         "args": {
-          "file": "${packages}/Eslint-Formatter/Default (OSX).sublime-keymap",
+          "file": "${packages}/ESLint-Formatter/Default (OSX).sublime-keymap",
           "platform": "OSX"
         },
         "caption": "Key Bindings – Default"
       }, {
         "command": "open_file",
         "args": {
-          "file": "${packages}/Eslint-Formatter/Default (Linux).sublime-keymap",
+          "file": "${packages}/ESLint-Formatter/Default (Linux).sublime-keymap",
           "platform": "Linux"
         },
         "caption": "Key Bindings – Default"
       }, {
         "command": "open_file",
         "args": {
-          "file": "${packages}/Eslint-Formatter/Default (Windows).sublime-keymap",
+          "file": "${packages}/ESLint-Formatter/Default (Windows).sublime-keymap",
           "platform": "Windows"
         },
         "caption": "Key Bindings – Default"

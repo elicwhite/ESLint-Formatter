@@ -1,4 +1,4 @@
 [{
-  "caption": "Eslint Formatter: Format this file",
+  "caption": "ESLint Formatter: Format this file",
   "command": "format_javascript"
 }]

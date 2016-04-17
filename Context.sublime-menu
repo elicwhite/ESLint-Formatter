@@ -1,5 +1,5 @@
 [{
-  "caption": "Eslint Formatter",
+  "caption": "ESLint Formatter",
   "children": [{
     "caption": "Format This File",
     "command": "format_javascript"
