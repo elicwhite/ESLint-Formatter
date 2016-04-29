@@ -1,0 +1,3 @@
+ESLint-Formatter 1.0.1 changelog
+
+[Fix]: Fix compatibility to run alongside the JSCS-Formatter plugin
