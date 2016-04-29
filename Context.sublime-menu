@@ -2,6 +2,6 @@
   "caption": "ESLint Formatter",
   "children": [{
     "caption": "Format This File",
-    "command": "format_javascript"
+    "command": "format_eslint"
   }]
 }]

@@ -18,7 +18,7 @@ KEYMAP_FILE = "Default ($PLATFORM).sublime-keymap"
 
 IS_WINDOWS = platform.system() == 'Windows'
 
-class FormatJavascriptCommand(sublime_plugin.TextCommand):
+class FormatEslintCommand(sublime_plugin.TextCommand):
   def run(self, edit):
     # Save the current viewport position to scroll to it after formatting.
     previous_selection = list(self.view.sel()) # Copy.
@@ -107,7 +107,7 @@ class ESLintFormatterEventListeners(sublime_plugin.EventListener):
   @staticmethod
   def on_pre_save(view):
     if PluginUtils.get_pref("format_on_save"):
-      view.run_command("format_javascript")
+      view.run_command("format_eslint")
 
 class PluginUtils:
   @staticmethod

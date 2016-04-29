@@ -1,4 +1,4 @@
 [{
   "keys": ["super+shift+h"],
-  "command": "format_javascript"
+  "command": "format_eslint"
 }]
