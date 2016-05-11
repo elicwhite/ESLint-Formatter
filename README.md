@@ -1,4 +1,4 @@
-[ESLint-Formatter](https://github.com/TheSavior/https://github.com/TheSavior/ESLint-Formatter) for Sublime Text 3
+[ESLint-Formatter](https://github.com/TheSavior/ESLint-Formatter) for Sublime Text 3
 =================
 
 Sublime Text 3 Plugin to autoformat your javascript code according to the ESLint configuration files you already have.
@@ -49,18 +49,18 @@ By default, ESLintFormatter will supply the following settings:
     "linux": "/usr/bin/eslint",
     "osx": "/usr/local/bin/eslint"
   },
-  
+
   // Specify this path to a ESLint config file to override the default behavior.
   // Passed to ESLint as --config. Read more here:
   http://eslint.org/docs/user-guide/command-line-interface#c---config
   "config_path": "",
-  
+
   // Automatically format when a file is saved.
   "format_on_save": false
 }
 ```
 
-* Modify any settings within the `Preferences -> Package Settings -> JSCS Formatter -> Settings - User` file.
+* Modify any settings within the `Preferences -> Package Settings -> ESLint-Formatter -> Settings - User` file.
 
 **Project-specific settings override**
 
