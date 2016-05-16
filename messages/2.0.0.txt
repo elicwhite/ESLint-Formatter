@@ -1,0 +1,4 @@
+ESLint-Formatter 2.0.0 changelog
+
+[Breaking] format_on_save will now only format specific, configurable extensions.
+  Defaults to: "js", "jsx", "es", "es6", "babel"
