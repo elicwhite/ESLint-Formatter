@@ -34,7 +34,7 @@ To install via Package Control, do the following:
 
 By default, ESLintFormatter will supply the following settings:
 
-```
+```javascript
 {
   // The Nodejs installation path
   "node_path": {
@@ -56,7 +56,17 @@ By default, ESLintFormatter will supply the following settings:
   "config_path": "",
 
   // Automatically format when a file is saved.
-  "format_on_save": false
+  "format_on_save": false,
+
+  // Only attempt to format files with whitelisted extensions on save.
+  // Leave empty to disable the check
+  "format_on_save_extensions": [
+    "js",
+    "jsx",
+    "es",
+    "es6",
+    "babel"
+  ]
 }
 ```
 

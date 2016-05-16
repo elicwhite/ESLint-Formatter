@@ -20,5 +20,15 @@
   "config_path": "",
 
   // Automatically format when a file is saved.
-  "format_on_save": false
+  "format_on_save": false,
+
+  // Only attempt to format files with whitelisted extensions on save.
+  // Leave empty to disable the check
+  "format_on_save_extensions": [
+    "js",
+    "jsx",
+    "es",
+    "es6",
+    "babel"
+  ]
 }
