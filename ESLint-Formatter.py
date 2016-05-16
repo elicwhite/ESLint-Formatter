@@ -107,6 +107,17 @@ class ESLintFormatterEventListeners(sublime_plugin.EventListener):
   @staticmethod
   def on_pre_save(view):
     if PluginUtils.get_pref("format_on_save"):
+      extensions = PluginUtils.get_pref("format_on_save_extensions")
+      extension = os.path.splitext(view.file_name())[1][1:]
+
+      # Default to using filename if no extension
+      if not extension:
+        extension = os.path.basename(view.file_name())
+
+      # Skip if extension is not whitelisted
+      if extensions and not extension in extensions:
+        return
+
       view.run_command("format_eslint")
 
 class PluginUtils:
