@@ -73,7 +73,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
       cmd = [node_path, eslint_path, '--fix', data]
 
-      config_path = PluginUtils.get_pref("config_path")
+      config_path = PluginUtils.get_config_path()
       if config_path:
         print("Using configuration from {0}".format(config_path))
         cmd.extend(["--config", config_path])
@@ -143,11 +143,64 @@ class PluginUtils:
     return node
 
   @staticmethod
+  def get_config_path():
+    cwd = os.getcwd()
+    folders = cwd.split('/')
+    return PluginUtils.get_eslint_config(cwd, folders)
+
+  @staticmethod
+  def get_eslint_config(root, folders):
+    cfs = ['.eslintrc.js', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc.json', '.eslintrc']
+    dir = None
+    for cf in cfs:
+      fd = os.path.join(root, cf)
+      if os.path.isfile(fd):
+        dir = fd
+        return dir
+
+    if dir == None:
+      f = folders.pop()
+      if f:
+        d = root.split(f)[0]
+        if d:
+          dir = PluginUtils.get_eslint_config(d, folders)
+          return dir
+
+    return False
+
+  @staticmethod
+  def get_eslint(root, folders):
+    # get from project's node_modules
+    ePath = 'node_modules/.bin/eslint'
+    eslint = os.path.join(root, ePath)
+
+    if os.path.isfile(eslint):
+      return eslint
+    else:
+      fp = folders.pop()
+      if fp:
+        fd = root.split(fp)[0]
+        if fd:
+          eslint = PluginUtils.get_eslint(fd, folders)
+          return eslint
+
+    return False
+
+
+  @staticmethod
   def get_eslint_path():
     platform = sublime.platform()
-    eslint = PluginUtils.get_pref("eslint_path").get(platform)
-    print("Using eslint path on '" + platform + "': " + eslint)
-    return eslint
+    cwd = os.getcwd()
+    folders = cwd.split('/')
+
+    esl = PluginUtils.get_eslint(cwd, folders)
+
+    # if not fund, use settings path
+    if esl == False:
+      esl = PluginUtils.get_pref("eslint_path").get(platform)
+
+    print("Using eslint path on '" + platform + "': " + esl)
+    return esl
 
   @staticmethod
   def get_output(cmd, cdir, data):
