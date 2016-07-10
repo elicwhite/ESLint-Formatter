@@ -1,0 +1,3 @@
+ESLint-Formatter 2.0.1 changelog
+
+[Fix] Fixing format on save. Now formats on save. https://github.com/TheSavior/ESLint-Formatter/pull/14
