@@ -37,9 +37,6 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
     output = self.run_script_on_file(self.view.file_name())
 
-    return
-    # eslint currently does not print the fixed file to stdout, it just modifies the file.
-
     # If the prettified text length is nil, the current syntax isn't supported.
     if output == None or len(output) < 1:
       return
@@ -83,7 +80,13 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
       else:
           cdir = "/"
 
-      output = PluginUtils.get_output(cmd, cdir, data)
+      file = open(data, 'w')
+      file.write(self.view.substr(sublime.Region(0, self.view.size())))
+      file.close()
+
+      eslint_log = PluginUtils.get_output(cmd, cdir, data)
+
+      output = open(data, 'r').read()
 
       return output;
 
