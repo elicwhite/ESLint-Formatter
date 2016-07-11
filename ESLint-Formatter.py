@@ -142,38 +142,64 @@ class PluginUtils:
     print("Using node.js path on '" + platform + "': " + node)
     return node
 
-  @staticmethod
-  def get_local_eslint(root, folders):
-    pkg = os.path.join(root, 'package.json')
-    esl = 'node_modules/.bin/eslint'
-
-    # find package.json first
-    if os.path.isfile(pkg):
-      # get eslint from local node_modules
-      return os.path.join(root, esl)
+  # Convert path that possibly contains a user tilde and/or is a relative path into an absolute path.
+  def normalize_path(path, realpath=False):
+    if realpath:
+      return os.path.realpath(os.path.expanduser(path))
     else:
-      fp = folders.pop()
-      if fp:
-        fd = root.split(fp)[0]
-        if fd:
-          return PluginUtils.get_local_eslint(fd, folders)
+      return os.path.abspath(os.path.expanduser(path))
+
+  # Yield path and every directory above path.
+  @staticmethod
+  def walk_up(path):
+    curr_path = path
+    while 1:
+      yield curr_path
+      curr_path, tail = os.path.split(curr_path)
+      if not tail:
+        break
+
+  # Find the first path matching a given pattern within dirname or the nearest ancestor of dirname.
+  @staticmethod
+  def findup(pattern, dirname=None):
+    if dirname is None:
+      normdn = PluginUtils.normalize_path(os.getcwd())
+    else:
+      normdn = PluginUtils.normalize_path(dirname)
+
+    for d in PluginUtils.walk_up(normdn):
+      matches = globmodule.glob(os.path.join(d, pattern))
+      if matches:
+          return matches[0]
 
     return None
 
   @staticmethod
+  def get_local_eslint():
+    pkg = PluginUtils.findup('package.json')
+
+    if pkg == None:
+      return None
+    else:
+      path = 'node_modules/.bin/eslint'
+      d = os.path.dirname(pkg)
+      esl = os.path.join(d, path)
+      if os.path.isfile(esl):
+        return esl
+      else:
+        return None
+
+  @staticmethod
   def get_eslint_path():
     platform = sublime.platform()
-    cwd = os.getcwd()
-    folders = cwd.split('/')
-
-    esl = PluginUtils.get_local_eslint(cwd, folders)
+    eslint = PluginUtils.get_local_eslint()
 
     # if local eslint not available, then using the settings config
-    if esl == None:
-      esl = PluginUtils.get_pref("eslint_path").get(platform)
+    if eslint == None:
+      eslint = PluginUtils.get_pref("eslint_path").get(platform)
 
-    print("Using eslint path on '" + platform + "': " + esl)
-    return esl
+    print("Using eslint path on '" + platform + "': " + eslint)
+    return eslint
 
   @staticmethod
   def get_output(cmd, cdir, data):
