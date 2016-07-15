@@ -1,0 +1,3 @@
+ESLint-Formatter 2.1.0 changelog
+
+[Feature] Try to use local eslint before falling back to eslint_path (https://github.com/TheSavior/ESLint-Formatter/pull/13)
