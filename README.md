@@ -44,6 +44,7 @@ By default, ESLintFormatter will supply the following settings:
   },
 
   // The location of the the globally installed eslint package
+  // This plugin will try to use a local installation of eslint first.
   "eslint_path": {
     "windows": "%APPDATA%/npm/node_modules/eslint/bin/eslint",
     "linux": "/usr/bin/eslint",
