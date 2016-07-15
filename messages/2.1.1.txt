@@ -1,0 +1,3 @@
+ESLint-Formatter 2.1.1 changelog
+
+[Fix] Fixing broken reference to glob

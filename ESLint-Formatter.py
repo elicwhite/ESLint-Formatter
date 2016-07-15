@@ -4,6 +4,7 @@
 
 import sublime, sublime_plugin
 import platform
+import glob
 import os, sys, subprocess, codecs, webbrowser
 from subprocess import Popen, PIPE
 
@@ -168,7 +169,7 @@ class PluginUtils:
       normdn = PluginUtils.normalize_path(dirname)
 
     for d in PluginUtils.walk_up(normdn):
-      matches = globmodule.glob(os.path.join(d, pattern))
+      matches = glob.glob(os.path.join(d, pattern))
       if matches:
           return matches[0]
 
