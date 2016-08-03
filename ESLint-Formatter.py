@@ -208,7 +208,7 @@ class PluginUtils:
     if pkg == None:
       return None
     else:
-      path = 'node_modules/.bin/eslint'
+      path = PluginUtils.get_pref("local_eslint_path").get(sublime.platform())
       d = os.path.dirname(pkg)
       esl = os.path.join(d, path)
       if os.path.isfile(esl):
