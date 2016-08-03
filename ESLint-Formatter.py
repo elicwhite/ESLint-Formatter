@@ -38,6 +38,10 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
     output = self.run_script_on_file(self.view.file_name())
 
+    # log output in debug mode
+    if PluginUtils.get_pref("debug"):
+      print(output)
+
     return
     # eslint currently does not print the fixed file to stdout, it just modifies the file.
 
@@ -75,9 +79,18 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
       cmd = [node_path, eslint_path, '--fix', data]
 
       config_path = PluginUtils.get_pref("config_path")
-      if config_path:
-        print("Using configuration from {0}".format(config_path))
-        cmd.extend(["--config", config_path])
+
+      if os.path.isfile(config_path):
+        # If config file path exists, use as is
+        full_config_path = config_path
+      else:
+        # Find config gile relative to project path
+        project_path = PluginUtils.project_path()
+        full_config_path = os.path.join(project_path, config_path)
+
+      if os.path.isfile(full_config_path):
+        print("Using configuration from {0}".format(full_config_path))
+        cmd.extend(["--config", full_config_path])
 
       if self.view.file_name():
           cdir = os.path.dirname(self.view.file_name())
@@ -123,6 +136,19 @@ class ESLintFormatterEventListeners(sublime_plugin.EventListener):
 
 class PluginUtils:
   @staticmethod
+  # Fetches root path of open project
+  def project_path():
+    project_data = sublime.active_window().project_data()
+
+    # if cannot find project data, use cwd
+    if project_data is None:
+      return os.getcwd()
+
+    folders = project_data['folders']
+    folder_path = folders[0]['path']
+    return folder_path
+
+  @staticmethod
   def get_pref(key):
     global_settings = sublime.load_settings(SETTINGS_FILE)
     value = global_settings.get(key)
@@ -164,7 +190,8 @@ class PluginUtils:
   @staticmethod
   def findup(pattern, dirname=None):
     if dirname is None:
-      normdn = PluginUtils.normalize_path(os.getcwd())
+      project_path = PluginUtils.project_path()
+      normdn = PluginUtils.normalize_path(project_path)
     else:
       normdn = PluginUtils.normalize_path(dirname)
 
@@ -178,7 +205,6 @@ class PluginUtils:
   @staticmethod
   def get_local_eslint():
     pkg = PluginUtils.findup('package.json')
-
     if pkg == None:
       return None
     else:
