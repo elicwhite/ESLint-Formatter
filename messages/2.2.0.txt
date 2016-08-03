@@ -1,0 +1,4 @@
+ESLint-Formatter 2.2.0 changelog
+
+[Feat] Try to find ESLint by looking at the sublime project's path
+and finding up to the root for node_modules/.bin/eslint
