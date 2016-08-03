@@ -1,0 +1,4 @@
+ESLint-Formatter 2.2.1 changelog
+
+[Fix] Improve running a local copy eslint on Windows
+[Fix] Improve finding the local eslint based on the project path
