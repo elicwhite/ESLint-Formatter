@@ -7,6 +7,7 @@ import platform
 import glob
 import os, sys, subprocess, codecs, webbrowser
 from subprocess import Popen, PIPE
+from SublimeLinter.lint import persist
 
 try:
   import commands
@@ -38,8 +39,9 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
     output = self.run_script_on_file(self.view.file_name())
 
-    # log output for easier debugging
-    print(output)
+    # log output in debug mode
+    if persist.debug_mode():
+      print(output)
 
     return
     # eslint currently does not print the fixed file to stdout, it just modifies the file.
