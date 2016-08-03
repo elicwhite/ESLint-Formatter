@@ -7,7 +7,6 @@ import platform
 import glob
 import os, sys, subprocess, codecs, webbrowser
 from subprocess import Popen, PIPE
-from SublimeLinter.lint import persist
 
 try:
   import commands
@@ -40,7 +39,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
     output = self.run_script_on_file(self.view.file_name())
 
     # log output in debug mode
-    if persist.debug_mode():
+    if PluginUtils.get_pref("debug"):
       print(output)
 
     return

@@ -36,5 +36,8 @@
     "es",
     "es6",
     "babel"
-  ]
+  ],
+
+  // logs eslint output messages to console when set to true
+  "debug": false
 }
