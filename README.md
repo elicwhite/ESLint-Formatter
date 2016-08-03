@@ -43,18 +43,26 @@ By default, ESLintFormatter will supply the following settings:
     "osx": "/usr/local/bin/node"
   },
 
-  // The location of the globally installed eslint package
-  // This plugin will find a local installation of eslint (node_modules/.bin/eslint)
-  // first by traversing up the project path. If not found, it will use this global eslint.
+  // The location to search for a locally installed eslint package.
+  // These are all relative paths to a project's directory.
+  // If this is not found, it will try to fallback to a global package
+  // (see 'eslint_path' below)
+  "local_eslint_path": {
+    "windows": "node_modules/eslint/bin/eslint.js",
+    "linux": "node_modules/.bin/eslint",
+    "osx": "node_modules/.bin/eslint"
+  },
+
+  // The location of the globally installed eslint package to use as a fallback
   "eslint_path": {
     "windows": "%APPDATA%/npm/node_modules/eslint/bin/eslint",
     "linux": "/usr/bin/eslint",
     "osx": "/usr/local/bin/eslint"
   },
 
-  // Specify this path to a ESLint config file to override the default behavior.
-  // Passed to ESLint as --config. Read more here:
-  http://eslint.org/docs/user-guide/command-line-interface#c---config
+  // Specify this path to an eslint config file to override the default behavior.
+  // Passed to eslint as --config. Read more here:
+  // http://eslint.org/docs/user-guide/command-line-interface#c---config
   // If an absolute path is provided, it will use as is.
   // Else, it will look for the file in the root of the project directory. 
   // Failing either, it will skip the config file
