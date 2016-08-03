@@ -174,7 +174,12 @@ class PluginUtils:
     if realpath:
       return os.path.realpath(os.path.expanduser(path))
     else:
-      return os.path.abspath(os.path.expanduser(path))
+      project_dir = sublime.active_window().project_file_name()
+      if project_dir:
+        cwd = os.path.dirname(project_dir)
+      else:
+        cwd = os.getcwd()
+      return os.path.normpath(os.path.join(cwd, os.path.expanduser(path)))
 
   # Yield path and every directory above path.
   @staticmethod
