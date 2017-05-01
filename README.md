@@ -106,6 +106,20 @@ For example:
 }
 ```
 
+## Performance
+
+If you experience performance issues, it may be worth taking a look at [`eslint_d`](https://github.com/mantoni/eslint_d.js). You can modify the settings to point to the `eslint_d` binary instead of `eslint`.
+
+For example:
+
+```javascript
+{
+  "local_eslint_path": {
+    "osx": "node_modules/.bin/eslint_d"
+  }
+}
+```
+
 ## Contributing
 
 If you find any bugs feel free to report them [here](https://github.com/TheSavior/ESLint-Formatter/issues).
