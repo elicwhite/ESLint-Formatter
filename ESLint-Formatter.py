@@ -7,6 +7,7 @@ import platform
 import glob
 import os, sys, subprocess, codecs, webbrowser
 from subprocess import Popen, PIPE
+import threading
 
 try:
   import commands
@@ -36,38 +37,39 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
     buffer_text = self.get_buffer_text(entire_buffer_region)
 
-    output = self.run_script_on_file(self.view.file_name())
+    def on_complete (output):
+      # log output in debug mode
+      if PluginUtils.get_pref("debug"):
+        print(output)
 
-    # log output in debug mode
-    if PluginUtils.get_pref("debug"):
-      print(output)
-
-    return
-    # eslint currently does not print the fixed file to stdout, it just modifies the file.
-
-    # If the prettified text length is nil, the current syntax isn't supported.
-    if output == None or len(output) < 1:
       return
+      # eslint currently does not print the fixed file to stdout, it just modifies the file.
 
-    # Replace the text only if it's different.
-    if output != buffer_text:
-      self.view.replace(edit, entire_buffer_region, output)
+      # If the prettified text length is nil, the current syntax isn't supported.
+      if output == None or len(output) < 1:
+        return
 
-    self.refold_folded_regions(folded_regions_content, output)
-    self.view.set_viewport_position((0, 0), False)
-    self.view.set_viewport_position(previous_position, False)
-    self.view.sel().clear()
+      # Replace the text only if it's different.
+      if output != buffer_text:
+        self.view.replace(edit, entire_buffer_region, output)
 
-    # Restore the previous selection if formatting wasn't performed only for it.
-    # if not is_formatting_selection_only:
-    for region in previous_selection:
-      self.view.sel().add(region)
+      self.refold_folded_regions(folded_regions_content, output)
+      self.view.set_viewport_position((0, 0), False)
+      self.view.set_viewport_position(previous_position, False)
+      self.view.sel().clear()
+
+      # Restore the previous selection if formatting wasn't performed only for it.
+      # if not is_formatting_selection_only:
+      for region in previous_selection:
+        self.view.sel().add(region)
+
+    self.run_script_on_file(self.view.file_name(), on_complete)
 
   def get_buffer_text(self, region):
     buffer_text = self.view.substr(region)
     return buffer_text
 
-  def run_script_on_file(self, data):
+  def run_script_on_file(self, data, on_complete):
     try:
       node_path = PluginUtils.get_node_path()
       eslint_path = PluginUtils.get_eslint_path()
@@ -97,9 +99,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
       else:
           cdir = "/"
 
-      output = PluginUtils.get_output(cmd, cdir, data)
-
-      return output;
+      PluginUtils.run(cmd, cdir, data, on_complete)
 
     except:
       # Something bad happened.
@@ -234,18 +234,20 @@ class PluginUtils:
     return eslint
 
   @staticmethod
-  def get_output(cmd, cdir, data):
-    try:
-      p = Popen(cmd,
-        stdout=PIPE, stdin=PIPE, stderr=PIPE,
-        cwd=cdir, shell=IS_WINDOWS)
-    except OSError:
-      raise Exception('Couldn\'t find Node.js. Make sure it\'s in your $PATH by running `node -v` in your command-line.')
-    stdout, stderr = p.communicate(input=data.encode('utf-8'))
-    stdout = stdout.decode('utf-8')
-    stderr = stderr.decode('utf-8')
+  def run(cmd, cdir, data, on_complete):
+    def _run():
+      try:
+        p = Popen(cmd,
+          stdout=PIPE, stdin=PIPE, stderr=PIPE,
+          cwd=cdir, shell=IS_WINDOWS)
+      except OSError:
+        raise Exception('Couldn\'t find Node.js. Make sure it\'s in your $PATH by running `node -v` in your command-line.')
+      stdout, stderr = p.communicate(input=data.encode('utf-8'))
+      stdout = stdout.decode('utf-8')
+      stderr = stderr.decode('utf-8')
 
-    if stderr:
-      raise Exception('Error: %s' % stderr)
-    else:
-      return stdout
+      if stderr:
+        raise Exception('Error: %s' % stderr)
+      else:
+        on_complete(stdout)
+    threading.Thread(target=_run).start()
