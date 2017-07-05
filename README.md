@@ -3,11 +3,13 @@
 
 Sublime Text 3 Plugin to autoformat your javascript code according to the ESLint configuration files you already have.
 
+This plugin formats but does not lint your code. To also enable linting, use this plugin in conjuction with [SublimeLinter-eslint](https://github.com/roadhump/SublimeLinter-eslint).
+
 
 ## Installation
 
 ### Linter installation
-ESLint (with autoformatting) must be installed on your system before this plugin will work. To install `eslint`, follow the getting started guide: http://eslint.org/docs/user-guide/getting-started.
+This Sublime Text Plugin depends on a valid installation of eslint version 3 or higher. To install `eslint`, follow the getting started guide: http://eslint.org/docs/user-guide/getting-started.
 
 ### Plugin installation
 
