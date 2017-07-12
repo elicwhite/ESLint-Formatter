@@ -32,6 +32,11 @@ To install via Package Control, do the following:
 * Linux/Windows: [Ctrl + Shift + H]
 * Mac: [Cmd + Shift + H]
 
+## Behaviour
+
+The formatting will be applied to the last saved state of a file.  
+It means that if you don't use the `format_on_save: true` option, you have to save first and then run the command.
+
 ## Settings
 
 By default, ESLintFormatter will supply the following settings:
