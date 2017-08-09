@@ -69,8 +69,9 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
   def run_script_on_file(self, data):
     try:
+      dirname = os.path.dirname(data)
       node_path = PluginUtils.get_node_path()
-      eslint_path = PluginUtils.get_eslint_path()
+      eslint_path = PluginUtils.get_eslint_path(dirname)
 
       if eslint_path == False:
         sublime.error_message('ESLint could not be found on your path')
@@ -208,8 +209,8 @@ class PluginUtils:
     return None
 
   @staticmethod
-  def get_local_eslint():
-    pkg = PluginUtils.findup('package.json')
+  def get_local_eslint(dirname):
+    pkg = PluginUtils.findup('package.json', dirname)
     if pkg == None:
       return None
     else:
@@ -222,9 +223,9 @@ class PluginUtils:
         return None
 
   @staticmethod
-  def get_eslint_path():
+  def get_eslint_path(dirname):
     platform = sublime.platform()
-    eslint = PluginUtils.get_local_eslint()
+    eslint = PluginUtils.get_local_eslint(dirname)
 
     # if local eslint not available, then using the settings config
     if eslint == None:
