@@ -74,7 +74,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
       eslint_path = PluginUtils.get_eslint_path(dirname)
 
       if eslint_path == False:
-        sublime.error_message('ESLint could not be found on your path')
+        print('ESLint could not be found on your path')
         return;
 
       cmd = [node_path, eslint_path, '--fix', data]
@@ -106,7 +106,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
       # Something bad happened.
       msg = str(sys.exc_info()[1])
       print("Unexpected error({0}): {1}".format(sys.exc_info()[0], msg))
-      sublime.error_message(msg)
+      # sublime.error_message(msg)
 
   def refold_folded_regions(self, folded_regions_content, entire_file_contents):
     self.view.unfold(sublime.Region(0, len(entire_file_contents)))
