@@ -1,0 +1,4 @@
+ESLint-Formatter 2.3.0 changelog
+
+[Feat] Look for local eslint based on file path, not just at root
+[Feat] Make it easier to open settings by opening default and user settings
