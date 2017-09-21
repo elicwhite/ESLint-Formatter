@@ -201,6 +201,7 @@ class PluginUtils:
     else:
       normdn = PluginUtils.normalize_path(dirname)
 
+    
     for d in PluginUtils.walk_up(normdn):
       matches = glob.glob(os.path.join(d, pattern))
       if matches:
@@ -210,13 +211,14 @@ class PluginUtils:
 
   @staticmethod
   def get_local_eslint(dirname):
-    pkg = PluginUtils.findup('package.json', dirname)
+    pkg = PluginUtils.findup('node_modules/eslint', dirname)
     if pkg == None:
       return None
     else:
       path = PluginUtils.get_pref("local_eslint_path").get(sublime.platform())
-      d = os.path.dirname(pkg)
+      d = os.path.dirname(os.path.dirname(pkg))
       esl = os.path.join(d, path)
+
       if os.path.isfile(esl):
         return esl
       else:
