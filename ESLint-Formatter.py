@@ -200,7 +200,7 @@ class PluginUtils:
       normdn = PluginUtils.normalize_path(project_path)
     else:
       normdn = PluginUtils.normalize_path(dirname)
-      
+
     for d in PluginUtils.walk_up(normdn):
       matches = glob.glob(os.path.join(d, pattern))
       if matches:
