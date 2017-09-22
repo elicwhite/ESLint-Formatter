@@ -1,0 +1,3 @@
+ESLint-Formatter 2.3.1 changelog
+
+[Fix] Look up file tree for node_modules/eslint vs the nearest package.json
