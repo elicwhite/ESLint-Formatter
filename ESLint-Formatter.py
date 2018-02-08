@@ -5,6 +5,7 @@
 import sublime, sublime_plugin
 import platform
 import glob
+import re
 import os, sys, subprocess, codecs, webbrowser
 from subprocess import Popen, PIPE
 
