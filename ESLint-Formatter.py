@@ -5,6 +5,7 @@
 import sublime, sublime_plugin
 import platform
 import glob
+import tempfile
 import os, sys, subprocess, codecs, webbrowser
 from subprocess import Popen, PIPE
 
@@ -36,14 +37,18 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
     buffer_text = self.get_buffer_text(entire_buffer_region)
 
-    output = self.run_script_on_file(self.view.file_name())
+    output = None
+    with tempfile.NamedTemporaryFile(mode='w+', delete=False) as tmp:
+      try:
+        tmp.write(buffer_text)
+        tmp.close()
+        output = self.run_script_on_file(tmp.name)
+      finally:
+        os.unlink(tmp.name)
 
     # log output in debug mode
     if PluginUtils.get_pref("debug"):
       print(output)
-
-    return
-    # eslint currently does not print the fixed file to stdout, it just modifies the file.
 
     # If the prettified text length is nil, the current syntax isn't supported.
     if output == None or len(output) < 1:
@@ -69,7 +74,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
   def run_script_on_file(self, data):
     try:
-      dirname = os.path.dirname(data)
+      dirname = os.path.dirname(self.view.file_name())
       node_path = PluginUtils.get_node_path()
       eslint_path = PluginUtils.get_eslint_path(dirname)
 
@@ -241,13 +246,9 @@ class PluginUtils:
       p = Popen(cmd,
         stdout=PIPE, stdin=PIPE, stderr=PIPE,
         cwd=cdir, shell=IS_WINDOWS)
+      p.communicate()
     except OSError:
       raise Exception('Couldn\'t find Node.js. Make sure it\'s in your $PATH by running `node -v` in your command-line.')
-    stdout, stderr = p.communicate(input=data.encode('utf-8'))
-    stdout = stdout.decode('utf-8')
-    stderr = stderr.decode('utf-8')
 
-    if stderr:
-      raise Exception('Error: %s' % stderr)
-    else:
-      return stdout
+    with open(data, 'r') as formatted:
+      return formatted.read()
