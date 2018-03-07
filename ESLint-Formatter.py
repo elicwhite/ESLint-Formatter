@@ -38,7 +38,10 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
     buffer_text = self.get_buffer_text(entire_buffer_region)
 
     output = None
-    with tempfile.NamedTemporaryFile(mode='w+', delete=False) as tmp:
+    dirname = None
+    if self.view.file_name():
+      dirname = os.path.dirname(self.view.file_name())
+    with tempfile.NamedTemporaryFile(mode='w+', delete=False, dir=dirname) as tmp:
       try:
         tmp.write(buffer_text)
         tmp.close()
@@ -74,7 +77,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
   def run_script_on_file(self, data):
     try:
-      dirname = os.path.dirname(self.view.file_name())
+      dirname = os.path.dirname(data)
       node_path = PluginUtils.get_node_path()
       eslint_path = PluginUtils.get_eslint_path(dirname)
 
