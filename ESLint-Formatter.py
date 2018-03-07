@@ -41,7 +41,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
     dirname = None
     if self.view.file_name():
       dirname = os.path.dirname(self.view.file_name())
-    with tempfile.NamedTemporaryFile(mode='w+', delete=False, dir=dirname) as tmp:
+    with tempfile.NamedTemporaryFile(mode="w+", delete=False, dir=dirname) as tmp:
       try:
         tmp.write(buffer_text)
         tmp.close()
@@ -253,5 +253,5 @@ class PluginUtils:
     except OSError:
       raise Exception('Couldn\'t find Node.js. Make sure it\'s in your $PATH by running `node -v` in your command-line.')
 
-    with open(data, 'r') as formatted:
+    with open(data, "r", encoding="utf-8") as formatted:
       return formatted.read()
