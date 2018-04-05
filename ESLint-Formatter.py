@@ -5,7 +5,7 @@
 import sublime, sublime_plugin
 import platform
 import glob
-import os, sys, subprocess, codecs, webbrowser
+import os, sys, subprocess, codecs, webbrowser, re
 from subprocess import Popen, PIPE
 
 try:
@@ -77,7 +77,15 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
         sublime.error_message('ESLint could not be found on your path')
         return;
 
+      # Support for WSL
+      wsl_enabled = PluginUtils.get_pref("wsl")
+      if wsl_enabled:
+        eslint_path = toUnix(eslint_path)
+        data = toUnix(data)
+
       cmd = [node_path, eslint_path, '--fix', data]
+
+      if wsl_enabled: cmd.insert(0,"wsl")
 
       config_path = PluginUtils.get_pref("config_path")
 
@@ -88,8 +96,8 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
         # Find config gile relative to project path
         project_path = PluginUtils.project_path()
         full_config_path = os.path.join(project_path, config_path)
-
       if os.path.isfile(full_config_path):
+        full_config_path = toUnix(full_config_path) if wsl_enabled else full_config_path
         print("Using configuration from {0}".format(full_config_path))
         cmd.extend(["--config", full_config_path])
 
@@ -251,3 +259,6 @@ class PluginUtils:
       raise Exception('Error: %s' % stderr)
     else:
       return stdout
+
+def toUnix(fileName):
+  return re.sub('([A-Z]):',lambda m: "/mnt/" + m.groups()[0].lower(),fileName).replace(os.path.normpath("/"),'/')
