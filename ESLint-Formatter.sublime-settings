@@ -46,6 +46,13 @@
     "babel"
   ],
 
+  // Setting this to true will allow you to use
+  // WSL(https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux)
+  // for your node/npm installation.
+  // Note: Be sure to set your node_path.windows to "node"
+  //     and that node is in your WSL's PATH.
+  "wsl": false,
+    
   // logs eslint output messages to console when set to true
   "debug": false
 }
