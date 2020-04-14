@@ -79,6 +79,12 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
       cmd = [node_path, eslint_path, '--fix', data]
 
+      project_path = PluginUtils.project_path()
+      extra_args = PluginUtils.get_pref("extra_args")
+      if extra_args and len(extra_args) > 0:
+        extra_args = list(map(lambda arg: arg.replace("$project_path", project_path), extra_args))
+        cmd = cmd + extra_args
+
       config_path = PluginUtils.get_pref("config_path")
 
       if os.path.isfile(config_path):
@@ -86,7 +92,6 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
         full_config_path = config_path
       else:
         # Find config gile relative to project path
-        project_path = PluginUtils.project_path()
         full_config_path = os.path.join(project_path, config_path)
 
       if os.path.isfile(full_config_path):

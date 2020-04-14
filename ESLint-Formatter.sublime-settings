@@ -33,6 +33,15 @@
   // Failing either, it will skip the config file
   "config_path": "",
 
+  // Pass additional arguments to eslint?
+  //
+  // Each command should be a string where it supports the following replacements:
+  //   $project_path - The path to the projects root folder
+  //
+  // Example:
+  //   ["--parser-options={\"tsconfigRootDir\": \"$project_path\"}"]
+  "extra_args": [],
+
   // Automatically format when a file is saved.
   "format_on_save": false,
 
