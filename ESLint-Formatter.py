@@ -5,6 +5,7 @@
 import sublime, sublime_plugin
 import platform
 import glob
+import re
 import os, sys, subprocess, codecs, webbrowser
 from subprocess import Popen, PIPE
 
@@ -126,13 +127,17 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 class ESLintFormatterEventListeners(sublime_plugin.EventListener):
   @staticmethod
   def on_post_save(view):
-    if PluginUtils.get_pref("format_on_save"):
+    file_name = view.file_name();
+    format_on_save = PluginUtils.get_pref("format_on_save")
+    if isinstance(format_on_save, str):
+        format_on_save = re.search(format_on_save, file_name) is not None
+    if format_on_save:
       extensions = PluginUtils.get_pref("format_on_save_extensions")
-      extension = os.path.splitext(view.file_name())[1][1:]
+      extension = os.path.splitext(file_name)[1][1:]
 
       # Default to using filename if no extension
       if not extension:
-        extension = os.path.basename(view.file_name())
+        extension = os.path.basename(file_name)
 
       # Skip if extension is not whitelisted
       if extensions and not extension in extensions:
