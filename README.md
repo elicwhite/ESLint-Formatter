@@ -72,12 +72,25 @@ By default, ESLintFormatter will supply the following settings:
   // Passed to eslint as --config. Read more here:
   // http://eslint.org/docs/user-guide/command-line-interface#c---config
   // If an absolute path is provided, it will use as is.
-  // Else, it will look for the file in the root of the project directory. 
+  // Else, it will look for the file in the root of the project directory.
   // Failing either, it will skip the config file
   "config_path": "",
 
+  // Pass additional arguments to eslint.
+  //
+  // Each command should be a string where it supports the following replacements:
+  //   $project_path - The path to the projects root folder
+  //
+  // Example:
+  //   ["--parser-options={\"tsconfigRootDir\": \"$project_path\"}"]
+  "extra_args": [],
+
   // Automatically format when a file is saved.
   "format_on_save": false,
+
+  // Use --fix-to-stdout, --stdin, and --stdin-filename to update the file if using eslint_d.
+  // See https://github.com/mantoni/eslint_d.js#automatic-fixing
+  "fix_to_stdout": false,
 
   // Only attempt to format files with whitelisted extensions on save.
   // Leave empty to disable the check
