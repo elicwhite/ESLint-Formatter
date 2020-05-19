@@ -289,5 +289,7 @@ class PluginUtils:
 
     if stderr:
       raise Exception('Error: %s' % stderr)
+    elif p.returncode != 0:
+      raise Exception('Error: %s' % (stderr or stdout))
     else:
       return stdout
