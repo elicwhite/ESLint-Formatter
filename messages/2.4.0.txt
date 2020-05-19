@@ -1,0 +1,5 @@
+ESLint-Formatter 2.4.0 changelog
+
+[Feat] Support invoking eslint from path, without explicit node (opt-in via config)
+[Feat] Support `extra_args` config to pass additional arguments to eslint
+[Feat] Support invoking `eslint_d` using stdio and updating the view in the on_pre_save hook
