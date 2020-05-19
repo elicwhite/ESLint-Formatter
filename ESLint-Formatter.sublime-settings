@@ -1,5 +1,6 @@
 {
   // Simply using `node` without specifying a path sometimes doesn't work :(
+  // If these are false, we'll invoke the eslint binary directly.
   // https://github.com/victorporof/Sublime-HTMLPrettify#oh-noez-command-not-found
   // http://nodejs.org/#download
   "node_path": {
@@ -10,7 +11,7 @@
 
   // The location to search for a locally installed eslint package.
   // These are all relative paths to a project's directory.
-  // If this is not found, it will try to fallback to a global package
+  // If this is not found or are false, it will try to fallback to a global package
   // (see 'eslint_path' below)
   "local_eslint_path": {
     "windows": "node_modules/eslint/bin/eslint.js",
@@ -33,7 +34,7 @@
   // Failing either, it will skip the config file
   "config_path": "",
 
-  // Pass additional arguments to eslint?
+  // Pass additional arguments to eslint.
   //
   // Each command should be a string where it supports the following replacements:
   //   $project_path - The path to the projects root folder

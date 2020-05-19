@@ -254,6 +254,7 @@ class PluginUtils:
       return None
     else:
       path = PluginUtils.get_pref("local_eslint_path").get(sublime.platform())
+      if not path: return None
       d = os.path.dirname(os.path.dirname(pkg))
       esl = os.path.join(d, path)
 

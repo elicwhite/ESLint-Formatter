@@ -41,9 +41,10 @@ If not using the `format_on_save: true` option, you have to save your file first
 
 By default, ESLintFormatter will supply the following settings:
 
-```javascript
+```jsonc
 {
   // The Nodejs installation path
+  // If these are false, we'll invoke the eslint binary directly.
   "node_path": {
     "windows": "node.exe",
     "linux": "/usr/bin/nodejs",
@@ -52,7 +53,7 @@ By default, ESLintFormatter will supply the following settings:
 
   // The location to search for a locally installed eslint package.
   // These are all relative paths to a project's directory.
-  // If this is not found, it will try to fallback to a global package
+  // If this is not found or are false, it will try to fallback to a global package
   // (see 'eslint_path' below)
   "local_eslint_path": {
     "windows": "node_modules/eslint/bin/eslint.js",
