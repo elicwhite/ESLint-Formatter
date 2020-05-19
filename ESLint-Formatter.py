@@ -36,14 +36,17 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
     buffer_text = self.get_buffer_text(entire_buffer_region)
 
-    output = self.run_script_on_file(self.view.file_name())
+    output = self.run_script_on_file(filename=self.view.file_name(), content=buffer_text)
 
     # log output in debug mode
     if PluginUtils.get_pref("debug"):
       print(output)
 
-    return
-    # eslint currently does not print the fixed file to stdout, it just modifies the file.
+    # Supported by eslint_d
+    # https://github.com/mantoni/eslint_d.js#automatic-fixing
+    if not PluginUtils.get_pref('fix_to_stdout'):
+      # eslint currently does not print the fixed file to stdout, it just modifies the file.
+      return
 
     # If the prettified text length is nil, the current syntax isn't supported.
     if output == None or len(output) < 1:
@@ -67,9 +70,18 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
     buffer_text = self.view.substr(region)
     return buffer_text
 
-  def run_script_on_file(self, data):
+  def get_lint_directory(self, filename):
+    project_path = PluginUtils.project_path(None)
+    if project_path is not None:
+      return PluginUtils.normalize_path(project_path)
+    if filename is not None:
+      cdir = os.path.dirname(filename)
+      if os.path.exists(cdir): return cdir
+    return os.getcwd()
+
+  def run_script_on_file(self, filename=None, content=None):
     try:
-      dirname = os.path.dirname(data)
+      dirname = filename and os.path.dirname(filename)
       node_path = PluginUtils.get_node_path()
       eslint_path = PluginUtils.get_eslint_path(dirname)
 
@@ -77,15 +89,24 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
         sublime.error_message('ESLint could not be found on your path')
         return
 
+      use_stdio = PluginUtils.get_pref('fix_to_stdout')
+      if not use_stdio and filename is None:
+        sublime.error_message('Cannot lint unsaved file')
+
       # Better support globally-available eslint binaries that don't need to be invoked with node.
       node_cmd = [node_path] if node_path else []
-      cmd = node_cmd + [eslint_path, '--fix', data]
+      fix_params = ['--stdin', '--fix-to-stdout'] if use_stdio else ['--fix', data]
+      if use_stdio and filename is not None: fix_params += ['--stdin-filename', filename]
+      cmd = node_cmd + [eslint_path] + fix_params
 
       project_path = PluginUtils.project_path()
       extra_args = PluginUtils.get_pref("extra_args")
       if extra_args and len(extra_args) > 0:
         extra_args = list(map(lambda arg: arg.replace("$project_path", project_path), extra_args))
         cmd = cmd + extra_args
+
+      if PluginUtils.get_pref("debug"):
+        print('eslint command line', cmd)
 
       config_path = PluginUtils.get_pref("config_path")
 
@@ -100,14 +121,13 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
         print("Using configuration from {0}".format(full_config_path))
         cmd.extend(["--config", full_config_path])
 
-      if self.view.file_name():
-          cdir = os.path.dirname(self.view.file_name())
-      else:
-          cdir = "/"
+      cdir = self.get_lint_directory(filename)
 
-      output = PluginUtils.get_output(cmd, cdir, data)
+      if type(content) == str: content = content.encode('utf-8')
 
-      return output;
+      output = PluginUtils.get_output(cmd, cdir, content if use_stdio else None)
+
+      return output
 
     except:
       # Something bad happened.
@@ -127,30 +147,39 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
 class ESLintFormatterEventListeners(sublime_plugin.EventListener):
   @staticmethod
+  def should_run_command(view, pre_phase):
+    if not PluginUtils.get_pref("format_on_save"): return False
+    if bool(PluginUtils.get_pref("fix_to_stdout")) != pre_phase: return False
+
+    extensions = PluginUtils.get_pref("format_on_save_extensions")
+    extension = os.path.splitext(view.file_name())[1][1:]
+
+    # Default to using filename if no extension
+    if not extension:
+      extension = os.path.basename(view.file_name())
+
+    # Skip if extension is not listed
+    return not extensions or extension in extensions
+
+  @staticmethod
+  def on_pre_save(view):
+    if ESLintFormatterEventListeners.should_run_command(view, True):
+      view.run_command("format_eslint")
+
+  @staticmethod
   def on_post_save(view):
-    if PluginUtils.get_pref("format_on_save"):
-      extensions = PluginUtils.get_pref("format_on_save_extensions")
-      extension = os.path.splitext(view.file_name())[1][1:]
-
-      # Default to using filename if no extension
-      if not extension:
-        extension = os.path.basename(view.file_name())
-
-      # Skip if extension is not whitelisted
-      if extensions and not extension in extensions:
-        return
-
+    if ESLintFormatterEventListeners.should_run_command(view, False):
       view.run_command("format_eslint")
 
 class PluginUtils:
   @staticmethod
   # Fetches root path of open project
-  def project_path():
+  def project_path(fallback=os.getcwd()):
     project_data = sublime.active_window().project_data()
 
     # if cannot find project data, use cwd
     if project_data is None:
-      return os.getcwd()
+      return fallback
 
     folders = project_data['folders']
     folder_path = folders[0]['path']
@@ -236,7 +265,7 @@ class PluginUtils:
   @staticmethod
   def get_eslint_path(dirname):
     platform = sublime.platform()
-    eslint = PluginUtils.get_local_eslint(dirname)
+    eslint = dirname and PluginUtils.get_local_eslint(dirname)
 
     # if local eslint not available, then using the settings config
     if eslint == None:
@@ -253,7 +282,7 @@ class PluginUtils:
         cwd=cdir, shell=IS_WINDOWS)
     except OSError:
       raise Exception('Couldn\'t find Node.js. Make sure it\'s in your $PATH by running `node -v` in your command-line.')
-    stdout, stderr = p.communicate(input=data.encode('utf-8'))
+    stdout, stderr = p.communicate(input=data)
     stdout = stdout.decode('utf-8')
     stderr = stderr.decode('utf-8')
 
