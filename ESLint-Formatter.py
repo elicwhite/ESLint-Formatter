@@ -101,9 +101,8 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
       project_path = PluginUtils.project_path()
       extra_args = PluginUtils.get_pref("extra_args")
-      if extra_args and len(extra_args) > 0:
-        extra_args = list(map(lambda arg: arg.replace("$project_path", project_path), extra_args))
-        cmd = cmd + extra_args
+      if extra_args:
+        cmd += [arg.replace('$project_path', project_path) for arg in extra_args]
 
       if PluginUtils.get_pref("debug"):
         print('eslint command line', cmd)
