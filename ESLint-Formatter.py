@@ -75,9 +75,11 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
       if eslint_path == False:
         sublime.error_message('ESLint could not be found on your path')
-        return;
+        return
 
-      cmd = [node_path, eslint_path, '--fix', data]
+      # Better support globally-available eslint binaries that don't need to be invoked with node.
+      node_cmd = [node_path] if node_path else []
+      cmd = node_cmd + [eslint_path, '--fix', data]
 
       project_path = PluginUtils.project_path()
       extra_args = PluginUtils.get_pref("extra_args")
@@ -172,7 +174,10 @@ class PluginUtils:
   def get_node_path():
     platform = sublime.platform()
     node = PluginUtils.get_pref("node_path").get(platform)
-    print("Using node.js path on '" + platform + "': " + node)
+    if type(node) == str:
+      print("Using node.js path on '" + platform + "': " + node)
+    else:
+      print("Not using explicit node.js path")
     return node
 
   # Convert path that possibly contains a user tilde and/or is a relative path into an absolute path.
