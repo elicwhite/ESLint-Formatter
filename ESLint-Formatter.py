@@ -95,7 +95,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
       # Better support globally-available eslint binaries that don't need to be invoked with node.
       node_cmd = [node_path] if node_path else []
-      fix_params = ['--stdin', '--fix-to-stdout'] if use_stdio else ['--fix', data]
+      fix_params = ['--stdin', '--fix-to-stdout'] if use_stdio else ['--fix', filename]
       if use_stdio and filename is not None: fix_params += ['--stdin-filename', filename]
       cmd = node_cmd + [eslint_path] + fix_params
 

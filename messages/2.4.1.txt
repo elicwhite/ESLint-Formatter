@@ -1,0 +1,3 @@
+ESLint-Formatter 2.4.1 changelog
+
+[Fix] Fix `Global name 'data' is not defined`
