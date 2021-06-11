@@ -5,8 +5,8 @@
 import sublime, sublime_plugin
 import platform
 import glob
-import os, sys, subprocess, codecs, webbrowser
-from subprocess import Popen, PIPE
+import os, sys, subprocess, codecs, webbrowser, signal
+from subprocess import Popen, PIPE, check_output
 
 try:
   import commands
@@ -169,6 +169,15 @@ class ESLintFormatterEventListeners(sublime_plugin.EventListener):
   def on_post_save(view):
     if ESLintFormatterEventListeners.should_run_command(view, False):
       view.run_command("format_eslint")
+
+  @staticmethod
+  def on_exit():
+    try:
+      pids = map(int, check_output(["pidof", "eslint_d"]).split())
+      for pid in pids:
+        os.kill(int(pid), signal.SIGKILL)
+    except:
+      pass
 
 class PluginUtils:
   @staticmethod
