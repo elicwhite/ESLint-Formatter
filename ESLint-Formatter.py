@@ -124,7 +124,7 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
 
       if type(content) == str: content = content.encode('utf-8')
 
-      output = PluginUtils.get_output(cmd, cdir, content if use_stdio else None)
+      output = PluginUtils.get_output(cmd, cdir, content if use_stdio else None, PluginUtils.get_pref('env'))
 
       return output
 
@@ -275,11 +275,11 @@ class PluginUtils:
     return eslint
 
   @staticmethod
-  def get_output(cmd, cdir, data):
+  def get_output(cmd, cdir, data, env):
     try:
       p = Popen(cmd,
         stdout=PIPE, stdin=PIPE, stderr=PIPE,
-        cwd=cdir, shell=IS_WINDOWS)
+        cwd=cdir, shell=IS_WINDOWS, env=env)
     except OSError:
       raise Exception('Couldn\'t find Node.js. Make sure it\'s in your $PATH by running `node -v` in your command-line.')
     stdout, stderr = p.communicate(input=data)
