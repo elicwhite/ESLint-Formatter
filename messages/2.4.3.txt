@@ -1,0 +1,3 @@
+ESLint-Formatter 2.4.3 changelog
+
+[Fix] Added new `config_file` option to allow better working directory resolution
