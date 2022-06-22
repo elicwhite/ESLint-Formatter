@@ -70,12 +70,32 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
     buffer_text = self.view.substr(region)
     return buffer_text
 
+  def walk_up_for_config(self, cdir, configFile):
+    if (cdir is None or configFile is None):
+      return
+
+    files = [file for file in os.listdir(cdir) if os.path.isfile(os.path.join(cdir, file))]
+    if configFile in files: 
+      return cdir
+
+    parent = os.path.dirname(cdir)
+    if (parent is cdir):
+      return parent
+
+    return self.walk_up_for_config(parent, configFile)
+
   def get_lint_directory(self, filename):
     project_path = PluginUtils.project_path(None)
     if project_path is not None:
       return PluginUtils.normalize_path(project_path)
+
     if filename is not None:
       cdir = os.path.dirname(filename)
+      configFile = PluginUtils.get_pref('config_file')
+      if (configFile):
+        foundCwd = self.walk_up_for_config(cdir, configFile)
+        if foundCwd:
+          return foundCwd
       if os.path.exists(cdir): return cdir
     return os.getcwd()
 

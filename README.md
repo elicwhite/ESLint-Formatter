@@ -76,6 +76,13 @@ By default, ESLintFormatter will supply the following settings:
   // Failing either, it will skip the config file
   "config_path": "",
 
+  // Specify the name of a config file, which determines the root of your
+  // project. This is a pattern such as ".eslintrc.json" or "package.json"
+  // and will be searched for upwards, to determine the working directory
+  // for linting. This is different to config_path and is only used for
+  // resolving the working directory.
+  "config_file": "",
+
   // Pass additional arguments to eslint.
   //
   // Each command should be a string where it supports the following replacements:
