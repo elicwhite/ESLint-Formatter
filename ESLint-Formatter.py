@@ -85,18 +85,19 @@ class FormatEslintCommand(sublime_plugin.TextCommand):
     return self.walk_up_for_config(parent, configFile)
 
   def get_lint_directory(self, filename):
-    project_path = PluginUtils.project_path(None)
-    if project_path is not None:
-      return PluginUtils.normalize_path(project_path)
+    # Start from the directory of the file
+    cdir = os.path.dirname(filename)
+    
+    # Walk up the directory tree to find a package.json file
+    while cdir:
+        if os.path.isfile(os.path.join(cdir, 'package.json')):
+            return cdir  # Return the directory where package.json is found
+        parent = os.path.dirname(cdir)
+        if parent == cdir:  # Reached the root directory
+            break
+        cdir = parent
 
-    if filename is not None:
-      cdir = os.path.dirname(filename)
-      configFile = PluginUtils.get_pref('config_file')
-      if (configFile):
-        foundCwd = self.walk_up_for_config(cdir, configFile)
-        if foundCwd:
-          return foundCwd
-      if os.path.exists(cdir): return cdir
+    # If no package.json found, fallback to the current working directory
     return os.getcwd()
 
   def run_script_on_file(self, filename=None, content=None):
