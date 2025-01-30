@@ -306,9 +306,9 @@ class PluginUtils:
     stdout = stdout.decode('utf-8')
     stderr = stderr.decode('utf-8')
 
-    if stderr:
-      raise Exception('Error: %s' % stderr)
-    elif p.returncode == 127:
+    if p.returncode == 127:
       raise Exception('Error: %s' % (stderr or stdout))
+    elif p.returncode != 0:
+      raise Exception('Error: %s' % stderr)
     else:
       return stdout
