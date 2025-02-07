@@ -308,7 +308,7 @@ class PluginUtils:
 
     if p.returncode == 127:
       raise Exception('Error: %s' % (stderr or stdout))
-    elif stderr && p.returncode != 0:
+    elif stderr and p.returncode != 0:
       raise Exception('Error: %s' % stderr)
     else:
       return stdout
