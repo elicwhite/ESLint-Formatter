@@ -1,0 +1,3 @@
+ESLint-Formatter 2.4.5 changelog
+
+[Fix] Presenting error dialog on any unfixable ESLint error, Bug reported here https://github.com/elicwhite/ESLint-Formatter/issues/97. 
