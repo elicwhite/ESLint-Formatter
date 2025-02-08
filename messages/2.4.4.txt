@@ -1,0 +1,3 @@
+ESLint-Formatter 2.4.4 changelog
+
+[Fix] Throwing exception only if eslint returns non-zero exit code, suprassing warnings thrown by eslint reported here https://github.com/elicwhite/ESLint-Formatter/issues/94. 
